@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "InputSwitcher.Extension.Palette (Package)": {
+      "commandName": "MsixPackage",
+      "doNotLaunchApp": true
+    },
+    "InputSwitcher.Extension.Palette (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
