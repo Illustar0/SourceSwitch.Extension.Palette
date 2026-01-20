@@ -29,6 +29,9 @@ public partial class InputSourceProfile
     [TomlValueOnSerialized]
     public string Title { get; set; } = "";
 
+    [TomlValueOnSerialized]
+    public bool TopLevel { get; set; } = false;
+
     [Required(ErrorMessage = "The \"vcpValue\" field is required.")]
     [RegularExpression(
         "^[0-9A-Fa-f]{1,2}$",

@@ -12,7 +12,7 @@ namespace SourceSwitch.Extension.Palette;
 
 public sealed partial class CommandsProvider : CommandProvider
 {
-    private readonly ICommandItem[] _commands;
+    private ICommandItem[] _commands;
     private static readonly SettingsManager SettingsManager = new();
 
     public CommandsProvider()
@@ -20,6 +20,9 @@ public sealed partial class CommandsProvider : CommandProvider
         DisplayName = Resources.CommandsProvider_CommandsProvider_Switch_input_source;
         Id = Resources.CommandsProvider_CommandsProvider_SourceSwitch;
         Icon = IconHelpers.FromRelativePath("Assets\\Logo.svg");
+        Settings = SettingsManager.Settings;
+        SettingsManager.Settings.SettingsChanged += (_, _) => RefreshCommands();
+
         _commands =
         [
             new CommandItem(new MainPage(SettingsManager))
@@ -28,9 +31,56 @@ public sealed partial class CommandsProvider : CommandProvider
                 Subtitle =
                     Resources.CommandsProvider_CommandsProvider_Switch_the_current_monitor_s_input_source_,
             },
+            .. SettingsManager
+                .InputSourceOrder.Profiles.Where(profile => profile.TopLevel)
+                .Select(profile => new CommandItem(
+                    new SwitchInputSource(Convert.ToUInt32(profile.VcpValue, 16))
+                    {
+                        Name = profile.Title,
+                        Icon = new IconInfo(
+                            IconFactory.CreateIcon(profile.LightIcon),
+                            IconFactory.CreateIcon(profile.DarkIcon)
+                        ),
+                    }
+                )
+                {
+                    Title = profile.Title,
+                }),
         ];
+    }
 
-        Settings = SettingsManager.Settings;
+    private void RefreshCommands()
+    {
+        _commands = BuildCommands();
+        RaiseItemsChanged(_commands.Length);
+    }
+
+    private static ICommandItem[] BuildCommands()
+    {
+        return
+        [
+            new CommandItem(new MainPage(SettingsManager))
+            {
+                Title = Resources.CommandsProvider_CommandsProvider_Switch_input_source,
+                Subtitle =
+                    Resources.CommandsProvider_CommandsProvider_Switch_the_current_monitor_s_input_source_,
+            },
+            .. SettingsManager
+                .InputSourceOrder.Profiles.Where(profile => profile.TopLevel)
+                .Select(profile => new CommandItem(
+                    new SwitchInputSource(Convert.ToUInt32(profile.VcpValue, 16))
+                    {
+                        Name = profile.Title,
+                        Icon = new IconInfo(
+                            IconFactory.CreateIcon(profile.LightIcon),
+                            IconFactory.CreateIcon(profile.DarkIcon)
+                        ),
+                    }
+                )
+                {
+                    Title = profile.Title,
+                }),
+        ];
     }
 
     public override ICommandItem[] TopLevelCommands()
