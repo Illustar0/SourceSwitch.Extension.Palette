@@ -126,9 +126,6 @@
   <data name="CommandsProvider_CommandsProvider_Switch_the_current_monitor_s_input_source_" xml:space="preserve">
     <value>切换当前显示器的输入源。</value>
   </data>
-  <data name="CommandsProvider_CommandsProvider_SourceSwitch" xml:space="preserve">
-    <value>输入源切换</value>
-  </data>
   <data name="SettingsManager__inputSourceOrder_Input_source_configuration" xml:space="preserve">
     <value>输入源配置</value>
   </data>

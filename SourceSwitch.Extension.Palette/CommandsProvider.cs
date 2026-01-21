@@ -18,7 +18,7 @@ public sealed partial class CommandsProvider : CommandProvider
     public CommandsProvider()
     {
         DisplayName = Resources.CommandsProvider_CommandsProvider_Switch_input_source;
-        Id = Resources.CommandsProvider_CommandsProvider_SourceSwitch;
+        Id = "SourceSwitch";
         Icon = IconHelpers.FromRelativePath("Assets\\Logo.svg");
         Settings = SettingsManager.Settings;
         SettingsManager.Settings.SettingsChanged += (_, _) => RefreshCommands();

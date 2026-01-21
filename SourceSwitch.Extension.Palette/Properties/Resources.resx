@@ -126,9 +126,6 @@
   <data name="CommandsProvider_CommandsProvider_Switch_the_current_monitor_s_input_source_" xml:space="preserve">
     <value>Switch the current monitor's input source.</value>
   </data>
-  <data name="CommandsProvider_CommandsProvider_SourceSwitch" xml:space="preserve">
-    <value>SourceSwitch</value>
-  </data>
   <data name="SettingsManager__inputSourceOrder_Input_source_configuration" xml:space="preserve">
     <value>Input source configuration</value>
   </data>
